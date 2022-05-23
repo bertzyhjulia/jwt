@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3307,
+    "username": "mysql",
+    "password": "",
+    "database": "user_posts_project",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true,
+  "dropSchema": false,
+  "logging": true,
+  "migrations": ["dist/src/**/db/migrations/*{.ts,.js}", "dist/jwt/**/db/migrations/*{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "db/migrations"
+  }
+  }
