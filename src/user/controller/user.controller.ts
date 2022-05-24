@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, Res, Session, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, Request, Res, Session, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import path = require('path');
@@ -15,6 +15,7 @@ import { LogInWithCredentialsGuard } from 'src/auth/guards/LogInWithCredentialsG
 import { CookieAuthenticationGuard } from 'src/auth/guards/cookieAuthentication.guard';
 import { EditUserDto } from '../models/dto/EditUser.dto';
 import { join } from 'path';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 
 
 export const storage = {
@@ -45,21 +46,10 @@ export class UserController {
     return await this.userService.create(createDto, img);
   }
 
-  // Rest Call: POST http://localhost:8080/api/users/login
-  @UseGuards(LogInWithCredentialsGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  @HttpCode(200)
-   logIin(@Body() loginUserDto: LoginUserDto, @Req() req): Observable<Object> {
-    console.log(loginUserDto)
-    // const user = this.userService.findByEmail(loginUserDto.email);
-    
-    const user = this.userService.findByEmail(loginUserDto.email).then(result =>
-      req.session.passport.user.source = result 
-      );
-    console.log(user)
-    console.log('user')
-  
-    return this.userService.logIn(loginUserDto).pipe(
+  async login(@Body() req: LoginUserDto) {
+    return this.userService.logIn(req).pipe(
       map((jwt: string) => {
         return {
           access_token: jwt,
@@ -70,25 +60,50 @@ export class UserController {
     );
   }
 
-  @UseGuards(CookieAuthenticationGuard)
-  @Get()
-  getSession(@Session() session: Record<string, any>) {
-    session.authentificated = true
-    return session.passport.user.source
-  }
+  // Rest Call: POST http://localhost:8080/api/users/login
+  // @UseGuards(LogInWithCredentialsGuard)
+  // @Post('login')
+  // @HttpCode(200)
+  //  logIin(@Body() loginUserDto: LoginUserDto, @Req() req): Observable<Object> {
+  //   console.log(loginUserDto)
+  //   // const user = this.userService.findByEmail(loginUserDto.email);
+    
+  //   // const user = this.userService.findByEmail(loginUserDto.email).then(result =>
+  //   //   req.session.passport.user.source = result 
+  //   //   );
+  //   // console.log(user)
+  //   // console.log('user')
+  
+  //   return this.userService.logIn(loginUserDto).pipe(
+  //     map((jwt: string) => {
+  //       return {
+  //         access_token: jwt,
+  //         token_type: 'JWT',
+  //         expires_in: 10000
+  //       }
+  //     })
+  //   );
+  // }
 
-  @UseGuards(CookieAuthenticationGuard)
-  @Get('/profile')
-  getProfile(@Session() session: Record<string, any>) {
-    return session.passport
-  }
+  // @UseGuards(CookieAuthenticationGuard)
+  // @Get()
+  // getSession(@Session() session: Record<string, any>) {
+  //   session.authentificated = true
+  //   return session.passport.user.source
+  // }
+
+  // @UseGuards(CookieAuthenticationGuard)
+  // @Get('/profile')
+  // getProfile(@Session() session: Record<string, any>) {
+  //   return session.passport
+  // }
 
   // Rest Call: GET http://localhost:8080/api/users/ 
   // Requires Valid JWT from Login Request
   @UseGuards(JwtAuthGuard)
-  @Get()
-  findAll(@Req() request): Observable<UserI[]> {
-    return this.userService.findAll();
+  @Get('/profile')
+  findAll(@Request() req) {
+    return req.user;
   }
 
   @UseGuards(JwtAuthGuard)

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PostsService } from './service/posts.service';
 import { PostsController } from './controller/posts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Post } from './model/post.entity';
+import { PostEntity } from './model/post.entity';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserEntity } from 'src/user/models/user.entity';
 import { SesssionSerializer } from 'src/auth/strategies/SessionSerializer';
@@ -10,7 +10,7 @@ import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, UserEntity]),
+    TypeOrmModule.forFeature([PostEntity, UserEntity]),
     AuthModule,
     UserModule
   ],

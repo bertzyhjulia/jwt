@@ -1,8 +1,9 @@
+import { CommentsEntity } from "src/comments/model/comments.entity";
 import { UserEntity } from "src/user/models/user.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Post {
+export class PostEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -13,7 +14,10 @@ export class Post {
   @Column()
   description: string;
 
-  @ManyToOne(() => UserEntity, user => user.nickName)
-  author: UserEntity;
+  @ManyToOne(() => UserEntity, user => user.id)
+  author_id: UserEntity;
+
+  @OneToMany(() => CommentsEntity, comments => comments.id)
+  comments_id: CommentsEntity[];
 
 }

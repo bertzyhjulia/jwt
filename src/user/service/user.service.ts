@@ -46,6 +46,9 @@ export class UserService {
   }
 
   logIn(loginUserDto: LoginUserDto): Observable<string> {
+    console.log('loginUserDto    '+ loginUserDto.email)
+    console.log('loginUserDto    '+ loginUserDto.nickName)
+    console.log('loginUserDto    '+ loginUserDto.password)
     return this.findUserByEmail(loginUserDto.email).pipe(
       switchMap((user: UserI) => {
         if (user) {

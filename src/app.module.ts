@@ -6,8 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import * as Joi from '@hapi/joi';
-
+import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal: true}),
@@ -15,12 +15,9 @@ import * as Joi from '@hapi/joi';
     UserModule,
     AuthModule,
     PostsModule,
-    ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        REDIS_HOST: Joi.string().required(),
-        REDIS_PORT: Joi.number().required(),
-      })
-    })
+    CommentsModule,
+    LikesModule
+    
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -13,11 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
-  const RedisStore = createRedisStore(session)
-  const redisClient = createClient({
-    url: 'redis://localhost:6379',
-  })
- 
+
   app.use(
     session({
       name: 'USER_SESSION',
@@ -27,7 +23,6 @@ async function bootstrap() {
       cookie:{
         maxAge: 90000000000000000000000,
       },
-      store: new RedisStore({ client: redisClient }),
     }),
   );
   app.use(passport.initialize())

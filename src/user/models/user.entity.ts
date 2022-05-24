@@ -1,4 +1,5 @@
-import { Post } from "src/posts/model/post.entity";
+import { CommentsEntity } from "src/comments/model/comments.entity";
+import { PostEntity } from "src/posts/model/post.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -36,6 +37,9 @@ export class UserEntity {
   @Column()
   avatar: string;
 
-  @OneToMany(() => Post, posts => posts.id)
-  posts: Post[];
+  @OneToMany(() => PostEntity, posts => posts.id)
+  posts: PostEntity[];
+
+  @OneToMany(() => CommentsEntity, comments => comments.id)
+  comments: CommentsEntity[];
 }

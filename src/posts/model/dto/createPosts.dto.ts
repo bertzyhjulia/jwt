@@ -3,5 +3,5 @@ import { UserEntity } from "src/user/models/user.entity";
 export class CreatePost {
     title: string;
     description: string;
-    author: UserEntity;
+    author_id: UserEntity
 }
