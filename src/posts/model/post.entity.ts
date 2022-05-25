@@ -1,4 +1,5 @@
 import { CommentsEntity } from "src/comments/model/comments.entity";
+import { LikesEntity } from "src/likes/model/likes.entity";
 import { UserEntity } from "src/user/models/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -19,5 +20,8 @@ export class PostEntity {
 
   @OneToMany(() => CommentsEntity, comments => comments.id)
   comments_id: CommentsEntity[];
+
+  @OneToMany(() => LikesEntity, likes => likes.id)
+  likes_id: LikesEntity[];
 
 }

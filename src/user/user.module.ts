@@ -8,14 +8,13 @@ import { PostEntity } from 'src/posts/model/post.entity';
 import { SesssionSerializer } from 'src/auth/strategies/SessionSerializer';
 import { LocalStrategy } from 'src/auth/strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { CommentsEntity } from 'src/comments/model/comments.entity';
+import { LikesEntity } from 'src/likes/model/likes.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, PostEntity]),
     AuthModule,
-    PassportModule.register({
-      session: true,
-    }),
   ],
   providers: [UserService, SesssionSerializer, LocalStrategy],
   controllers: [UserController],
