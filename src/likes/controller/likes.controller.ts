@@ -14,4 +14,9 @@ export class LikesController {
         createLike.user_id = req.user.id
         return await this.likesService.createLike(createLike)
     }
+
+    @Get()
+    async get(){
+        return this.likesService.get()
+    }
 }

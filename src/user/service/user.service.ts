@@ -81,7 +81,7 @@ export class UserService {
   }
 
   findAll(): Observable<UserI[]> {
-    return from(this.userRepository.find());
+    return from(this.userRepository.find({relations:['post_id']}));
   }
 
   findOne(id: number): Observable<UserI> {
@@ -134,6 +134,10 @@ export class UserService {
         }
       })
     )
+  }
+
+  public getOne(id: number): Promise<UserI> {
+    return this.userRepository.findOneOrFail({ id });
   }
 
 }

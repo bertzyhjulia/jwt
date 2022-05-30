@@ -60,46 +60,6 @@ export class UserController {
     );
   }
 
-  // Rest Call: POST http://localhost:8080/api/users/login
-  // @UseGuards(LogInWithCredentialsGuard)
-  // @Post('login')
-  // @HttpCode(200)
-  //  logIin(@Body() loginUserDto: LoginUserDto, @Req() req): Observable<Object> {
-  //   console.log(loginUserDto)
-  //   // const user = this.userService.findByEmail(loginUserDto.email);
-    
-  //   // const user = this.userService.findByEmail(loginUserDto.email).then(result =>
-  //   //   req.session.passport.user.source = result 
-  //   //   );
-  //   // console.log(user)
-  //   // console.log('user')
-  
-  //   return this.userService.logIn(loginUserDto).pipe(
-  //     map((jwt: string) => {
-  //       return {
-  //         access_token: jwt,
-  //         token_type: 'JWT',
-  //         expires_in: 10000
-  //       }
-  //     })
-  //   );
-  // }
-
-  // @UseGuards(CookieAuthenticationGuard)
-  // @Get()
-  // getSession(@Session() session: Record<string, any>) {
-  //   session.authentificated = true
-  //   return session.passport.user.source
-  // }
-
-  // @UseGuards(CookieAuthenticationGuard)
-  // @Get('/profile')
-  // getProfile(@Session() session: Record<string, any>) {
-  //   return session.passport
-  // }
-
-  // Rest Call: GET http://localhost:8080/api/users/ 
-  // Requires Valid JWT from Login Request
   @UseGuards(JwtAuthGuard)
   @Get('/profile')
   findAll(@Request() req) {

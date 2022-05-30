@@ -1,7 +1,7 @@
 import { CommentsEntity } from "src/comments/model/comments.entity";
 import { LikesEntity } from "src/likes/model/likes.entity";
 import { UserEntity } from "src/user/models/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class PostEntity {
@@ -16,12 +16,12 @@ export class PostEntity {
   description: string;
 
   @ManyToOne(() => UserEntity, user => user.id)
-  author_id: UserEntity;
+  public author_id: UserEntity;
 
   @OneToMany(() => CommentsEntity, comments => comments.id)
-  comments_id: CommentsEntity[];
+  public comments_id: CommentsEntity[];
 
   @OneToMany(() => LikesEntity, likes => likes.id)
-  likes_id: LikesEntity[];
+  public likes_id: LikesEntity[];
 
 }

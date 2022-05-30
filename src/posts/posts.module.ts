@@ -7,12 +7,18 @@ import { AuthModule } from 'src/auth/auth.module';
 import { UserEntity } from 'src/user/models/user.entity';
 import { SesssionSerializer } from 'src/auth/strategies/SessionSerializer';
 import { UserModule } from 'src/user/user.module';
+import { CommentsEntity } from 'src/comments/model/comments.entity';
+import { LikesEntity } from 'src/likes/model/likes.entity';
+import { CommentsModule } from 'src/comments/comments.module';
+import { LikesModule } from 'src/likes/likes.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PostEntity, UserEntity]),
+    TypeOrmModule.forFeature([PostEntity, UserEntity, CommentsEntity, LikesEntity]),
     AuthModule,
-    UserModule
+    UserModule,
+    CommentsModule,
+    LikesModule
   ],
   providers: [PostsService],
   controllers: [PostsController]

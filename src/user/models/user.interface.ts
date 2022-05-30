@@ -9,3 +9,10 @@ export interface UserI {
     nickName:string;
     password?: string;
 }
+
+export interface UserInterface {
+    id?: number;
+    username?: string;
+    email: string;
+    password?: string;
+  }

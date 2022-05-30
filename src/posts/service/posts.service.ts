@@ -33,7 +33,7 @@ export class PostsService {
     }
 
     async getAllPosts(){
-        return this.postRepository.find({relations:['author_id']})
+        return this.postRepository.find({relations:['author_id']});
     }
 
     async deletePost(id:number){

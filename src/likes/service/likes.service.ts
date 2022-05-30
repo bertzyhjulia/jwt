@@ -32,4 +32,8 @@ export class LikesService {
         return await this.deleteLike(CreateLike)
     }
 
+    async get(){
+      return await this.likesRepository.find({relations:['user_id','post_id']})
+    }
+
 }
